@@ -7,3 +7,11 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* custom css */
+.blur__effect {
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  box-shadow: 0 4px 30px #00000017;
+  background: #ffffff50;
+}
