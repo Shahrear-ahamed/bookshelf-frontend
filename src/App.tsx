@@ -1,11 +1,15 @@
-import { useEffect } from "react";
-import Footer from "./components/Footer";
-import Navbar from "./components/Navbar";
+import { ReactNode, useEffect } from "react";
 import "react-toastify/dist/ReactToastify.css";
-import { useAppDispatch } from "./redux/hook";
+import Footer from "./components/Footer";
+import Hero from "./components/Hero";
+import Navbar from "./components/Navbar";
 import { setUserData } from "./redux/features/user/userSlice";
+import { useAppDispatch } from "./redux/hook";
 
-function App() {
+interface IProps {
+  children: ReactNode;
+}
+function App({ children }: IProps) {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
@@ -19,6 +23,8 @@ function App() {
   return (
     <>
       <Navbar />
+      <Hero />
+      {children}
       <Footer />
     </>
   );
