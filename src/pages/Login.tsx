@@ -1,7 +1,13 @@
-"use-client";
-
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
+/* eslint-disable @typescript-eslint/no-misused-promises */
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+import { useLoginUserMutation } from "../redux/api/apiSlice";
+import { setUserData } from "../redux/features/user/userSlice";
+import { useAppDispatch } from "../redux/hook";
+import { LoginSignUpResponse } from "../types/loginSignUpResponse";
 
 interface LoginFormInputs {
   email: string;
@@ -14,10 +20,34 @@ const Login = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<LoginFormInputs>();
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const [loginUser, { data, isSuccess, isError }] = useLoginUserMutation();
 
-  const onSubmit = (data: LoginFormInputs) => {
-    console.log(data);
+  const onSubmit = async (userData: LoginFormInputs) => {
+    try {
+      await loginUser(userData);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    if (isError) {
+      toast.error("Something went wrong");
+    }
+
+    if (isSuccess && !isError) {
+      const { data: responseData }: LoginSignUpResponse = data;
+      const storeData = { email: responseData.email };
+
+      localStorage.setItem("token", responseData.accessToken);
+      dispatch(setUserData(storeData));
+
+      toast.success("Login successful");
+      navigate("/");
+    }
+  }, [data, dispatch, isError, isSuccess, navigate]);
 
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center px-4">
@@ -71,9 +101,11 @@ const Login = () => {
               </span>
             )}
           </div>
+
           <button className="w-full px-4 py-2 text-white font-medium bg-indigo-600 hover:bg-indigo-500 active:bg-indigo-600 rounded-lg duration-150">
             Log in
           </button>
+
           <div className="text-center">
             <Link to="/forget-password" className="hover:text-indigo-600">
               Forgot password?

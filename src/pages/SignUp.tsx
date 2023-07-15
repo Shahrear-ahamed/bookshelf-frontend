@@ -1,5 +1,7 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface SignUpFormInputs {
   email: string;
@@ -15,7 +17,13 @@ const SignUp = () => {
   } = useForm<SignUpFormInputs>();
 
   const onSubmit = (data: SignUpFormInputs) => {
-    console.log(data);
+    const { email, password, confirmPassword } = data;
+    console.log(email, password, confirmPassword);
+
+    if (password !== confirmPassword) {
+      toast.success("Password and Confirm Password must be the same");
+      return;
+    }
   };
 
   return (
