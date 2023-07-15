@@ -1,12 +1,12 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import { RouterProvider } from "react-router-dom";
-import routes from "./router/index";
-import { store } from "./redux/store";
 import { Provider } from "react-redux";
-import "react-toastify/dist/ReactToastify.css";
+import { RouterProvider } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import "./index.css";
+import { store } from "./redux/store";
+import routes from "./router/index";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>

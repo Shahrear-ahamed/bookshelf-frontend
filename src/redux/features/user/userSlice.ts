@@ -27,9 +27,13 @@ const userSlice = createSlice({
     setUserData: (state, action: PayloadAction<IUser>) => {
       state.user.email = action.payload.email;
     },
+    logOut: (state) => {
+      localStorage.clear();
+      state.user.email = null;
+    },
   },
 });
 
-export const { setUserData } = userSlice.actions;
+export const { setUserData, logOut } = userSlice.actions;
 
 export default userSlice.reducer;

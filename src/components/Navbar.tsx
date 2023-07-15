@@ -1,67 +1,10 @@
-import { useState, useRef, useEffect } from "react";
+import { useState } from "react";
 import { Link } from "react-router-dom";
+import { logOut } from "../redux/features/user/userSlice";
+import { useAppDispatch, useAppSelector } from "../redux/hook";
 
 type Props = {
   class?: string;
-};
-
-// Profile Dropdown
-const ProfileDropDown = (props: Props) => {
-  const [state, setState] = useState(false);
-  const profileRef = useRef<HTMLButtonElement>(null);
-
-  const navigation = [{ title: "Dashboard", path: "/dashboard" }];
-
-  useEffect(() => {
-    const handleDropDown = (e: MouseEvent) => {
-      if (profileRef.current && !profileRef.current.contains(e.target as Node))
-        setState(false);
-    };
-    document.addEventListener("click", handleDropDown);
-
-    return () => {
-      document.removeEventListener("click", handleDropDown);
-    };
-  }, []);
-
-  return (
-    <div className={`relative ${props.class!}`}>
-      <div className="flex items-center space-x-4">
-        <button
-          ref={profileRef}
-          className="w-10 h-10 outline-none rounded-full ring-offset-2 ring-gray-200 ring-2 lg:focus:ring-indigo-600"
-          onClick={() => setState(!state)}>
-          <img
-            src="https://randomuser.me/api/portraits/men/46.jpg"
-            className="w-full h-full rounded-full"
-          />
-        </button>
-        <div className="lg:hidden">
-          <span className="block">Micheal John</span>
-          <span className="block text-sm text-gray-500">john@gmail.com</span>
-        </div>
-      </div>
-      <ul
-        className={`bg-white top-12 right-0 mt-5 space-y-5 lg:absolute lg:border lg:rounded-md lg:text-sm lg:w-52 lg:shadow-md lg:space-y-0 lg:mt-0 ${
-          state ? "" : "lg:hidden"
-        }`}>
-        {navigation.map((item, idx) => (
-          <li key={idx}>
-            <Link
-              className="block text-gray-600 lg:hover:bg-gray-50 lg:p-2.5"
-              to={item.path}>
-              {item.title}
-            </Link>
-          </li>
-        ))}
-        <li>
-          <button className="block w-full text-start text-gray-600 lg:hover:bg-gray-50 lg:p-2.5">
-            Log out
-          </button>
-        </li>
-      </ul>
-    </div>
-  );
 };
 
 // Login Button
@@ -80,9 +23,28 @@ const LoginButton = (props: Props) => {
   );
 };
 
+// Log out Button
+const LogOutButton = (props: Props) => {
+  const dispatch = useAppDispatch();
+  const handleLogout = () => {
+    dispatch(logOut());
+  };
+  return (
+    <div
+      onClick={handleLogout}
+      className={`gap-x-6 items-center justify-end mt-6 space-y-6 md:flex md:space-y-0 md:mt-0 cursor-pointer ${
+        props.class as string
+      }`}>
+      <span className="py-3 px-4 w-full md:w-28 text-center text-white bg-gray-800 hover:bg-gray-700 active:bg-gray-900 rounded-md shadow block lg:inline">
+        Log out
+      </span>
+    </div>
+  );
+};
+
 const Navbar = () => {
   const [menuState, setMenuState] = useState(false);
-  const profileState = false;
+  const { user } = useAppSelector((state) => state.user);
 
   const navigation = [{ title: "All books", path: "/all-books" }];
   return (
@@ -113,8 +75,8 @@ const Navbar = () => {
               </ul>
 
               {/* // set profile or login button in dropdown */}
-              {profileState ? (
-                <ProfileDropDown class="mt-5 pt-5 border-t md:hidden" />
+              {user?.email ? (
+                <LogOutButton class="mt-5 pt-5 border-t md:hidden" />
               ) : (
                 <LoginButton class="mt-5 pt-5 border-t md:hidden" />
               )}
@@ -142,8 +104,8 @@ const Navbar = () => {
               </form>
 
               {/* // set profile or login button in bar */}
-              {profileState ? (
-                <ProfileDropDown class="hidden md:block" />
+              {user?.email ? (
+                <LogOutButton class="hidden md:block" />
               ) : (
                 <LoginButton class="hidden md:block" />
               )}
