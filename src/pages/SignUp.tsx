@@ -1,7 +1,13 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import { useSignUpUserMutation } from "../redux/api/apiSlice";
+import { setUserData } from "../redux/features/user/userSlice";
+import { useAppDispatch } from "../redux/hook";
+import { LoginSignUpResponse } from "../types/loginSignUpResponse";
 
 interface SignUpFormInputs {
   email: string;
@@ -15,16 +21,38 @@ const SignUp = () => {
     handleSubmit,
     formState: { errors },
   } = useForm<SignUpFormInputs>();
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const [signUp, { data, isError, isSuccess }] = useSignUpUserMutation();
 
-  const onSubmit = (data: SignUpFormInputs) => {
+  const onSubmit = async (data: SignUpFormInputs) => {
     const { email, password, confirmPassword } = data;
-    console.log(email, password, confirmPassword);
 
     if (password !== confirmPassword) {
       toast.success("Password and Confirm Password must be the same");
       return;
     }
+
+    await signUp({ email, password });
   };
+
+  useEffect(() => {
+    if (isError) {
+      toast.error("Something went wrong");
+    }
+
+    if (isSuccess && !isError) {
+      const { data: responseData }: LoginSignUpResponse = data;
+      const storeData = { email: responseData.email };
+
+      localStorage.setItem("user", responseData.email);
+      localStorage.setItem("token", responseData.accessToken);
+      dispatch(setUserData(storeData));
+
+      toast.success("Sign up successful");
+      navigate("/");
+    }
+  }, [data, dispatch, isError, isSuccess, navigate]);
 
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center px-4">

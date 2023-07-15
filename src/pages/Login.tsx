@@ -1,5 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-misused-promises */
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
@@ -41,6 +41,7 @@ const Login = () => {
       const { data: responseData }: LoginSignUpResponse = data;
       const storeData = { email: responseData.email };
 
+      localStorage.setItem("user", responseData.email);
       localStorage.setItem("token", responseData.accessToken);
       dispatch(setUserData(storeData));
 
