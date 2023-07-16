@@ -9,10 +9,11 @@ interface IBook {
 
 const bookApi = bookShelfApi.injectEndpoints({
   endpoints: (builder) => ({
-    getBooks: builder.query({
+    getHomeBooks: builder.query({
       query: () => ({
         url: "/books",
       }),
+      providesTags: ["homeBook", "allBook"],
     }),
     addNewBook: builder.mutation({
       query: (book: IBook) => ({
@@ -20,9 +21,9 @@ const bookApi = bookShelfApi.injectEndpoints({
         method: "POST",
         body: book,
       }),
-      invalidatesTags: ["AllBook", "MyBook"],
+      invalidatesTags: ["allBook", "homeBook"],
     }),
   }),
 });
 
-export const { useGetBooksQuery, useAddNewBookMutation } = bookApi;
+export const { useGetHomeBooksQuery, useAddNewBookMutation } = bookApi;

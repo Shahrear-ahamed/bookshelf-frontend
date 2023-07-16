@@ -47,6 +47,7 @@ const Navbar = () => {
   const { user } = useAppSelector((state) => state.user);
 
   const navigation = [
+    { title: "Home", path: "/" },
     { title: "All books", path: "/all-books" },
     { title: "Blogs", path: "/blogs" },
   ];

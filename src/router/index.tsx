@@ -29,7 +29,7 @@ const router = createBrowserRouter([
     path: "/all-books",
     element: (
       <Layout>
-        <AllBooks />,
+        <AllBooks />
       </Layout>
     ),
   },
@@ -39,7 +39,7 @@ const router = createBrowserRouter([
       <Layout>
         <AddNewBook />
       </Layout>
-    ),
+    )
   },
   {
     path: "/blogs",

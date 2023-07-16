@@ -16,3 +16,7 @@
   background: #ffffff50;
   z-index: 999;
 }
+
+.card__shadow {
+  box-shadow: 5px 8px 13px 2px #58585821;
+}
