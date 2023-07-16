@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import BookDetailsButton from "../components/BookDetailsButton";
@@ -16,14 +17,16 @@ export default function BookDetails() {
 
   const bookDetails: IBook = data?.data;
 
+  useEffect(() => {
+    if (isError) {
+      const getBookError = error as IErrorResponse;
+      toast.error(getBookError?.data?.message);
+    }
+  }, [error, isError]);
+
+  // send it in after useEffect because it gives error
   if (isLoading && !isSuccess) return <div>Loading...</div>;
-
   if (data?.data === null) return <BookNotFound />;
-
-  if (isError) {
-    const getBookError = error as IErrorResponse;
-    toast.error(getBookError?.data?.message);
-  }
 
   return (
     <div>

@@ -1,9 +1,10 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDeleteBookMutation } from "../redux/features/book/bookApi";
+import { setEditableBook } from "../redux/features/book/bookSlice";
 import { useAddWishListMutation } from "../redux/features/user/userApi";
-import { useAppSelector } from "../redux/hook";
+import { useAppDispatch, useAppSelector } from "../redux/hook";
 import { IBook } from "../types/book";
 import { IErrorResponse } from "../types/response";
 import Modal from "./UI/Modal";
@@ -12,13 +13,14 @@ function BookDetailsButton({ book }: { book: IBook }) {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   // add to wishlist
   const [
     addWishList,
     { isError: wishIsError, isSuccess: wishIsSuccess, error: wishError },
   ] = useAddWishListMutation();
-  const [deleteBook] = useDeleteBookMutation();
+  const [deleteBook, { isSuccess }] = useDeleteBookMutation();
 
   // delete book
 
@@ -34,25 +36,34 @@ function BookDetailsButton({ book }: { book: IBook }) {
 
   // handle user wishlist button UI interaction
   if (wishIsSuccess) toast.success("Added to wishlist");
-  if (wishIsError) {
-    const wishListError = wishError as IErrorResponse;
-    toast.error(wishListError?.data?.message);
-  }
 
   // handle user edit and delete
   const handleEdit = () => {
     if (user?.email === book.publisher) {
-      console.log("edit");
+      dispatch(setEditableBook(book));
+      navigate("/edit-book");
     }
   };
 
   const handleDelete = () => {
     if (user?.email === book.publisher) {
       deleteBook(book._id);
-      setIsOpen(false);
-      navigate("/")
     }
   };
+
+  useEffect(() => {
+    if (wishIsError) {
+      const wishListError = wishError as IErrorResponse;
+      toast.error(wishListError?.data?.message);
+    }
+
+    if (isSuccess) {
+      toast.success("Book deleted");
+      setIsOpen(false);
+      navigate("/");
+    }
+  }, [isSuccess, navigate, wishError, wishIsError]);
+
   return (
     <div className="flex justify-between mb-10">
       <button
