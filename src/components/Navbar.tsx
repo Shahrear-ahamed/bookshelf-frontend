@@ -46,7 +46,19 @@ const Navbar = () => {
   const [menuState, setMenuState] = useState(false);
   const { user } = useAppSelector((state) => state.user);
 
-  const navigation = [{ title: "All books", path: "/all-books" }];
+  const navigation = [
+    { title: "All books", path: "/all-books" },
+    { title: "Blogs", path: "/blogs" },
+  ];
+
+  if (user?.email) {
+    const userNavigation = [
+      { title: "My books", path: "/my-books" },
+      { title: "Add New Book", path: "/add-new-book" },
+    ];
+    navigation.push(...userNavigation);
+  }
+
   return (
     <>
       <nav className="fixed w-full top-0 blur__effect">
@@ -66,9 +78,11 @@ const Navbar = () => {
               className={`absolute z-20 w-full top-16 left-0 p-4 border-b lg:static lg:block lg:border-none ${
                 menuState ? "" : "hidden"
               }`}>
-              <ul className="mt-12 mb-5 md:mb-0 space-y-5 lg:flex lg:space-x-6 lg:space-y-0 lg:mt-0">
+              <ul className="mt-12 mb-5 md:mb-0 space-y-5 lg:flex lg:justify-center lg:space-x-6 lg:space-y-0 lg:mt-0">
                 {navigation.map((item, idx) => (
-                  <li key={idx} className="text-gray-900 hover:text-gray-900">
+                  <li
+                    key={idx}
+                    className="text-gray-900 hover:text-[#6159E7] duration-300">
                     <Link to={item.path}>{item.title}</Link>
                   </li>
                 ))}
@@ -154,5 +168,3 @@ const Navbar = () => {
 };
 
 export default Navbar;
-
-

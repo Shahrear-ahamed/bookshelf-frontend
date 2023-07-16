@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export default function Hero() {
   return (
     <div className="relative">
@@ -11,8 +13,8 @@ export default function Hero() {
         <section>
           <div className="max-w-screen-xl mx-auto px-4 py-28 gap-12 text-gray-600 overflow-hidden md:px-8 md:flex">
             <div className="flex-none space-y-5 max-w-xl">
-              <a
-                href="javascript:void(0)"
+              <Link
+                to="/"
                 className="inline-flex gap-x-6 items-center rounded-full p-1 pr-6 border text-sm font-medium duration-150 hover:bg-white">
                 <span className="inline-block rounded-full px-3 py-1 bg-indigo-600 text-white">
                   News
@@ -31,7 +33,7 @@ export default function Hero() {
                     />
                   </svg>
                 </p>
-              </a>
+              </Link>
               <h1 className="text-4xl text-gray-800 font-extrabold sm:text-5xl">
                 Build your mind exactly how you want
               </h1>
@@ -41,8 +43,8 @@ export default function Hero() {
                 worlds and expanding our minds to new horizons.
               </p>
               <div className="flex items-center gap-x-3 sm:text-sm">
-                <a
-                  href="javascript:void(0)"
+                <Link
+                  to="/"
                   className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex">
                   Get started
                   <svg
@@ -56,9 +58,9 @@ export default function Hero() {
                       clipRule="evenodd"
                     />
                   </svg>
-                </a>
-                <a
-                  href="javascript:void(0)"
+                </Link>
+                <Link
+                  to="/"
                   className="flex items-center justify-center gap-x-1 py-2 px-4 text-gray-700 hover:text-gray-900 font-medium duration-150 md:inline-flex">
                   Contact sales
                   <svg
@@ -72,7 +74,7 @@ export default function Hero() {
                       clipRule="evenodd"
                     />
                   </svg>
-                </a>
+                </Link>
               </div>
             </div>
             <div className="flex-1 hidden md:block">
