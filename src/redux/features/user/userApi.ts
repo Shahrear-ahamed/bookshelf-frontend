@@ -31,16 +31,6 @@ const userApi = bookShelfApi.injectEndpoints({
         },
       }),
     }),
-    removeWishList: builder.mutation({
-      query: (bookDetails) => ({
-        url: "/users/remove-wishlist",
-        method: "PUT",
-        body: bookDetails,
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("token")}`,
-        },
-      }),
-    }),
   }),
 });
 
@@ -48,5 +38,4 @@ export const {
   useSignUpUserMutation,
   useLoginUserMutation,
   useAddWishListMutation,
-  useRemoveWishListMutation,
 } = userApi;
