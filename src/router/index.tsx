@@ -1,12 +1,12 @@
 import { createBrowserRouter } from "react-router-dom";
-import Book from "../Book";
 import Layout from "../Layout";
 import AddNewBook from "../pages/AddNewBook";
+import AllBooks from "../pages/AllBooks";
+import Blogs from "../pages/Blogs";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import PageNotFound from "../pages/PageNotFound";
 import SignUp from "../pages/SignUp";
-import Blogs from "../pages/Blogs";
 
 const router = createBrowserRouter([
   {
@@ -26,10 +26,10 @@ const router = createBrowserRouter([
     element: <SignUp />,
   },
   {
-    path: "/all-book",
+    path: "/all-books",
     element: (
       <Layout>
-        <Book />,
+        <AllBooks />,
       </Layout>
     ),
   },

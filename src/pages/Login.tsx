@@ -2,10 +2,10 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useLoginUserMutation } from "../redux/api/apiSlice";
 import { setUserData } from "../redux/features/user/userSlice";
 import { useAppDispatch } from "../redux/hook";
 import { LoginSignUpResponse } from "../types/loginSignUpResponse";
+import { useLoginUserMutation } from "../redux/features/user/userApi";
 
 interface LoginFormInputs {
   email: string;

@@ -1,10 +1,8 @@
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable @typescript-eslint/no-misused-promises */
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useSignUpUserMutation } from "../redux/api/apiSlice";
+import { useSignUpUserMutation } from "../redux/features/user/userApi";
 import { setUserData } from "../redux/features/user/userSlice";
 import { useAppDispatch } from "../redux/hook";
 import { LoginSignUpResponse } from "../types/loginSignUpResponse";

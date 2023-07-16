@@ -4,7 +4,9 @@ function AddNewBook() {
   return (
     <section className="px-4 py-5 max-w-screen-xl mx-auto md:px-8">
       <AddBookForm />
-      AddNewBook
+      <div>
+        <h2>My Books</h2>
+      </div>
     </section>
   );
 }

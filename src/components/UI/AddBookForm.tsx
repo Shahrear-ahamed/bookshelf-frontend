@@ -1,11 +1,14 @@
+import { useEffect } from "react";
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
+import { useAddNewBookMutation } from "../../redux/features/book/bookApi";
 
 interface NewBookFormInputs {
   title: string;
   author: string;
   genre: string;
-  publicationDate: string;
+  publicationDate: number;
 }
 
 export default function AddBookForm() {
@@ -14,10 +17,26 @@ export default function AddBookForm() {
     handleSubmit,
     formState: { errors },
   } = useForm<NewBookFormInputs>();
+  const [addNewBook, { data, isLoading, isSuccess, isError }] =
+    useAddNewBookMutation();
+
+  console.log(data, isLoading, isSuccess, isError);
 
   const onSubmit = async (bookData: NewBookFormInputs) => {
-    console.log(bookData);
+    try {
+      bookData["publicationDate"] = Number(bookData["publicationDate"]);
+
+      await addNewBook(bookData);
+    } catch (error) {
+      console.log(error);
+    }
   };
+
+  useEffect(() => {
+    if (isSuccess && !isError) {
+      toast.success("Book added successfully");
+    }
+  }, [isError, isSuccess]);
 
   return (
     <form
@@ -103,13 +122,17 @@ export default function AddBookForm() {
             </label>
             <div className="mt-2">
               <input
-                type="text"
+                type="number"
                 id="publicationDate"
+                maxLength={4}
                 autoComplete="publicationDate"
                 {...register("publicationDate", {
-                  required: "Publication Date is required",
+                  pattern: {
+                    value: /^\d{4}$/,
+                    message: "Please enter a valid year",
+                  },
                 })}
-                className="block px-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
+                className="block px-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6  [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
               />
               {errors.publicationDate && (
                 <span className="text-red-400 text-xs">
