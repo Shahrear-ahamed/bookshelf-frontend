@@ -1,13 +1,19 @@
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import BookNotFound from "../components/UI/BookNotFound";
 import { useGetSingleBookQuery } from "../redux/features/book/bookApi";
+import { useAddWishListMutation } from "../redux/features/user/userApi";
 import { useAppSelector } from "../redux/hook";
 import { IBook } from "../types/book";
-import { toast } from "react-toastify";
+import { IErrorResponse } from "../types/response";
 
 export default function BookDetails() {
   const { id } = useParams();
   const { user } = useAppSelector((state) => state.user);
+  const [
+    addWishList,
+    { isError: wishIsError, isSuccess: wishIsSuccess, error: wishError },
+  ] = useAddWishListMutation();
 
   const { data, isLoading, isSuccess, isError, error } = useGetSingleBookQuery(
     id as string
@@ -17,17 +23,28 @@ export default function BookDetails() {
 
   if (isLoading && !isSuccess) return <div>Loading...</div>;
 
-  if (data.data === null) return <BookNotFound />;
+  if (data?.data === null) return <BookNotFound />;
 
-  if (isError) return console.log(error);
+  if (isError) {
+    const getBookError = error as IErrorResponse;
+    toast.error(getBookError?.data?.message);
+  }
 
   const handleWishlist = () => {
     if (user?.email) {
-      console.log("add to wishlist");
+      const wishBook = { bookId: bookDetails._id };
+      addWishList(wishBook);
     } else {
       toast.warning("Please login to add to wishlist");
     }
   };
+
+  // handle user wishlist button UI interaction
+  if (wishIsSuccess) toast.success("Added to wishlist");
+  if (wishIsError) {
+    const wishListError = wishError as IErrorResponse;
+    toast.error(wishListError?.data?.message);
+  }
 
   const handleEdit = () => {
     if (user?.email === bookDetails.publisher) {
@@ -79,7 +96,7 @@ export default function BookDetails() {
               Add to wishlist
             </button>
 
-            {user?.email === bookDetails.publisher && (
+            {user?.email === bookDetails?.publisher && (
               <>
                 <button
                   onClick={handleEdit}

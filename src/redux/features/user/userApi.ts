@@ -21,7 +21,32 @@ const userApi = bookShelfApi.injectEndpoints({
         body: payload,
       }),
     }),
+    addWishList: builder.mutation({
+      query: (bookDetails) => ({
+        url: "/users/add-wishlist",
+        method: "PUT",
+        body: bookDetails,
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+    }),
+    removeWishList: builder.mutation({
+      query: (bookDetails) => ({
+        url: "/users/remove-wishlist",
+        method: "PUT",
+        body: bookDetails,
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+    }),
   }),
 });
 
-export const { useSignUpUserMutation, useLoginUserMutation } = userApi;
+export const {
+  useSignUpUserMutation,
+  useLoginUserMutation,
+  useAddWishListMutation,
+  useRemoveWishListMutation,
+} = userApi;
