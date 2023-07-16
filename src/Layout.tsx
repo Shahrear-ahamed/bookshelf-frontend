@@ -22,7 +22,9 @@ function Layout({ children }: IProps) {
   return (
     <>
       <Navbar />
-      {children}
+      <section className="mt-12 mx-auto px-4 max-w-screen-xl md:px-8">
+        {children}
+      </section>
       <Footer />
     </>
   );

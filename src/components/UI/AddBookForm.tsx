@@ -1,5 +1,5 @@
-import { useEffect } from "react";
 import { PhotoIcon } from "@heroicons/react/24/solid";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useAddNewBookMutation } from "../../redux/features/book/bookApi";
@@ -16,11 +16,9 @@ export default function AddBookForm() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<NewBookFormInputs>();
-  const [addNewBook, { data, isLoading, isSuccess, isError }] =
-    useAddNewBookMutation();
-
-  console.log(data, isLoading, isSuccess, isError);
+  const [addNewBook, { isSuccess, isError }] = useAddNewBookMutation();
 
   const onSubmit = async (bookData: NewBookFormInputs) => {
     try {
@@ -35,13 +33,12 @@ export default function AddBookForm() {
   useEffect(() => {
     if (isSuccess && !isError) {
       toast.success("Book added successfully");
+      reset();
     }
-  }, [isError, isSuccess]);
+  }, [isError, isSuccess, reset]);
 
   return (
-    <form
-      onSubmit={handleSubmit(onSubmit)}
-      className="w-full md:w-2/3 lg:w-4/5 p-0 md:p-5 lg:p-8 my-10 m-auto">
+    <form onSubmit={handleSubmit(onSubmit)}>
       <div className="pb-6">
         <h2 className="text-base font-semibold leading-7 text-gray-900">
           Add your new book

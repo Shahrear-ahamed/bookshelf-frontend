@@ -20,6 +20,7 @@ const bookApi = bookShelfApi.injectEndpoints({
         method: "POST",
         body: book,
       }),
+      invalidatesTags: ["AllBook", "MyBook"],
     }),
   }),
 });
