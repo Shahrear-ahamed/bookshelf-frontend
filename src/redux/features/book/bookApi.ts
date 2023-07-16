@@ -47,6 +47,17 @@ const bookApi = bookShelfApi.injectEndpoints({
       }),
       invalidatesTags: ["allBook", "homeBook", "myBook"],
     }),
+    updateBook: builder.mutation({
+      query: ({ id, book }: { id: string; book: IBook }) => ({
+        url: `/books/${id}`,
+        method: "PUT",
+        body: book,
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: ["allBook", "homeBook", "myBook"],
+    }),
   }),
 });
 
@@ -56,4 +67,5 @@ export const {
   useAddNewBookMutation,
   useGetSingleBookQuery,
   useDeleteBookMutation,
+  useUpdateBookMutation,
 } = bookApi;

@@ -1,12 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { bookShelfApi } from "./api/apiSlice";
-import bookReducer from "./features/book/bookSlice";
 import userReducer from "./features/user/userSlice";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
-    book: bookReducer,
     [bookShelfApi.reducerPath]: bookShelfApi.reducer,
   },
   middleware: (getDefaultMiddleware) =>

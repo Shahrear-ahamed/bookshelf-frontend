@@ -3,12 +3,13 @@ import Layout from "../Layout";
 import AddNewBook from "../pages/AddNewBook";
 import AllBooks from "../pages/AllBooks";
 import Blogs from "../pages/Blogs";
+import BookDetails from "../pages/BookDetails";
+import EditBook from "../pages/EditBook";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import MyBooks from "../pages/MyBooks";
 import PageNotFound from "../pages/PageNotFound";
 import SignUp from "../pages/SignUp";
-import BookDetails from "../pages/BookDetails";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,14 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/blogs",
+    element: (
+      <Layout>
+        <Blogs />
+      </Layout>
+    ),
+  },
+  {
     path: "/my-books",
     element: (
       <Layout>
@@ -52,6 +61,14 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/edit-book/:id",
+    element: (
+      <Layout>
+        <EditBook />
+      </Layout>
+    ),
+  },
+  {
     path: "/book/:id",
     element: (
       <Layout>
@@ -59,14 +76,7 @@ const router = createBrowserRouter([
       </Layout>
     ),
   },
-  {
-    path: "/blogs",
-    element: (
-      <Layout>
-        <Blogs />
-      </Layout>
-    ),
-  },
+
   {
     path: "*",
     element: <PageNotFound />,

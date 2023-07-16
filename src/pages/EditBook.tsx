@@ -1,11 +1,17 @@
 import { PhotoIcon } from "@heroicons/react/24/solid";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import { useAddNewBookMutation } from "../../redux/features/book/bookApi";
-import { useAppSelector } from "../../redux/hook";
+import {
+  useGetSingleBookQuery,
+  useUpdateBookMutation,
+} from "../redux/features/book/bookApi";
+import { useAppSelector } from "../redux/hook";
+import { IBook } from "../types/book";
+import { IErrorResponse } from "../types/response";
 
-interface NewBookFormInputs {
+interface IEditBookFormInputs {
   title: string;
   author: string;
   genre: string;
@@ -13,33 +19,64 @@ interface NewBookFormInputs {
   publisher: string;
 }
 
-export default function AddBookForm() {
+export default function EditBook() {
+  const { id } = useParams();
+  const { user } = useAppSelector((state) => state.user);
   const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
-  } = useForm<NewBookFormInputs>();
-  const { user } = useAppSelector((state) => state.user);
-  const [addNewBook, { isSuccess, isError }] = useAddNewBookMutation();
+  } = useForm<IEditBookFormInputs>();
 
-  const onSubmit = async (bookData: NewBookFormInputs) => {
+  // get edit book
+  const { data, isLoading, isError, error } = useGetSingleBookQuery(
+    id as string
+  );
+  const bookDetails: IBook = data?.data;
+
+  // update book
+  const [
+    updateBook,
+    { isSuccess: updateSuccess, isError: updateIsError, error: updateError },
+  ] = useUpdateBookMutation();
+
+  const onSubmit = async (bookData: IEditBookFormInputs) => {
     try {
       bookData["publicationDate"] = Number(bookData["publicationDate"]);
       bookData["publisher"] = user.email as string;
 
-      await addNewBook(bookData);
+      const updateBookData = {
+        id: id as string,
+        book: bookData,
+      };
+
+      await updateBook(updateBookData);
     } catch (error) {
       console.log(error);
     }
   };
 
   useEffect(() => {
-    if (isSuccess && !isError) {
-      toast.success("Book added successfully");
-      reset();
+    // get book error and success
+
+    if (isError) {
+      const getBookError = error as IErrorResponse;
+      toast.error(getBookError?.data?.message);
     }
-  }, [isError, isSuccess, reset]);
+
+    // update book success and error
+    if (updateSuccess && !updateIsError) {
+      toast.success("Book update successfully");
+    }
+
+    if (updateIsError) {
+      const updateChangeError = updateError as IErrorResponse;
+      toast.error(updateChangeError?.data?.message);
+    }
+  }, [error, isError, updateError, updateIsError, updateSuccess]);
+
+  if (isLoading) return <div>Loading...</div>;
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
@@ -60,6 +97,7 @@ export default function AddBookForm() {
                 type="text"
                 id="title"
                 autoComplete="title"
+                defaultValue={bookDetails?.title}
                 {...register("title", { required: "Title is required" })}
                 className="block px-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
@@ -82,6 +120,7 @@ export default function AddBookForm() {
                 type="text"
                 id="author"
                 autoComplete="author"
+                defaultValue={bookDetails?.author}
                 {...register("author", { required: "Author is required" })}
                 className="block px-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
@@ -104,6 +143,7 @@ export default function AddBookForm() {
                 type="text"
                 id="genre"
                 autoComplete="genre"
+                defaultValue={bookDetails?.genre}
                 {...register("genre", { required: "Genre is required" })}
                 className="block px-4 w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 sm:text-sm sm:leading-6"
               />
@@ -127,6 +167,7 @@ export default function AddBookForm() {
                 id="publicationDate"
                 maxLength={4}
                 autoComplete="publicationDate"
+                defaultValue={bookDetails?.publicationDate}
                 {...register("publicationDate", {
                   pattern: {
                     value: /^\d{4}$/,
@@ -189,7 +230,7 @@ export default function AddBookForm() {
         <button
           type="submit"
           className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-          Save
+          Update
         </button>
       </div>
     </form>

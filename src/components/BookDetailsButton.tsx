@@ -2,9 +2,8 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDeleteBookMutation } from "../redux/features/book/bookApi";
-import { setEditableBook } from "../redux/features/book/bookSlice";
 import { useAddWishListMutation } from "../redux/features/user/userApi";
-import { useAppDispatch, useAppSelector } from "../redux/hook";
+import { useAppSelector } from "../redux/hook";
 import { IBook } from "../types/book";
 import { IErrorResponse } from "../types/response";
 import Modal from "./UI/Modal";
@@ -13,7 +12,6 @@ function BookDetailsButton({ book }: { book: IBook }) {
   const [isOpen, setIsOpen] = useState(false);
   const { user } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   // add to wishlist
   const [
@@ -40,8 +38,7 @@ function BookDetailsButton({ book }: { book: IBook }) {
   // handle user edit and delete
   const handleEdit = () => {
     if (user?.email === book.publisher) {
-      dispatch(setEditableBook(book));
-      navigate("/edit-book");
+      navigate(`/edit-book/${book._id}`);
     }
   };
 
