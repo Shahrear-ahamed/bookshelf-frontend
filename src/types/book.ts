@@ -3,7 +3,8 @@ export interface IBook {
   title: string;
   author: string;
   genre: string;
-  publicationDate: number;
+  publisher: string;
   createdAt: string;
   updatedAt: string;
+  publicationDate: number;
 }

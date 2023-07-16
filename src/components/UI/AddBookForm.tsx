@@ -3,12 +3,14 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useAddNewBookMutation } from "../../redux/features/book/bookApi";
+import { useAppSelector } from "../../redux/hook";
 
 interface NewBookFormInputs {
   title: string;
   author: string;
   genre: string;
   publicationDate: number;
+  publisher: string;
 }
 
 export default function AddBookForm() {
@@ -18,11 +20,13 @@ export default function AddBookForm() {
     formState: { errors },
     reset,
   } = useForm<NewBookFormInputs>();
+  const { user } = useAppSelector((state) => state.user);
   const [addNewBook, { isSuccess, isError }] = useAddNewBookMutation();
 
   const onSubmit = async (bookData: NewBookFormInputs) => {
     try {
       bookData["publicationDate"] = Number(bookData["publicationDate"]);
+      bookData["publisher"] = user.email as string;
 
       await addNewBook(bookData);
     } catch (error) {

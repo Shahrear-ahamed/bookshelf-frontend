@@ -5,8 +5,10 @@ import AllBooks from "../pages/AllBooks";
 import Blogs from "../pages/Blogs";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import MyBooks from "../pages/MyBooks";
 import PageNotFound from "../pages/PageNotFound";
 import SignUp from "../pages/SignUp";
+import BookDetails from "../pages/BookDetails";
 
 const router = createBrowserRouter([
   {
@@ -34,12 +36,28 @@ const router = createBrowserRouter([
     ),
   },
   {
+    path: "/my-books",
+    element: (
+      <Layout>
+        <MyBooks />
+      </Layout>
+    ),
+  },
+  {
     path: "/add-new-book",
     element: (
       <Layout>
         <AddNewBook />
       </Layout>
-    )
+    ),
+  },
+  {
+    path: "/book/:id",
+    element: (
+      <Layout>
+        <BookDetails />
+      </Layout>
+    ),
   },
   {
     path: "/blogs",

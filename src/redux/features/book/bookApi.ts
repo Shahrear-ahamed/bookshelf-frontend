@@ -15,15 +15,34 @@ const bookApi = bookShelfApi.injectEndpoints({
       }),
       providesTags: ["homeBook", "allBook"],
     }),
+    getMyBooks: builder.query({
+      query: () => ({
+        url: "/books/my-books",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      providesTags: ["myBook"],
+    }),
+    getSingleBook: builder.query({
+      query: (id: string) => ({
+        url: `/books/${id}`,
+      }),
+    }),
     addNewBook: builder.mutation({
       query: (book: IBook) => ({
         url: "/books/add-new-book",
         method: "POST",
         body: book,
       }),
-      invalidatesTags: ["allBook", "homeBook"],
+      invalidatesTags: ["allBook", "homeBook", "myBook"],
     }),
   }),
 });
 
-export const { useGetHomeBooksQuery, useAddNewBookMutation } = bookApi;
+export const {
+  useGetHomeBooksQuery,
+  useGetMyBooksQuery,
+  useAddNewBookMutation,
+  useGetSingleBookQuery,
+} = bookApi;
