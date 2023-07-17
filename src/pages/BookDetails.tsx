@@ -38,8 +38,8 @@ export default function BookDetails() {
 
   return (
     <div>
-      <div className="flex justify-between w-full md:w-3/4 mx-auto my-10 gap-10">
-        <div className="h-full w-1/2">
+      <div className="flex flex-col md:flex-row justify-between w-full md:w-3/4 mx-auto my-10 gap-10">
+        <div className="h-full w-3/5 md:w-1/2 mx-auto">
           <img
             src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg"
             alt={bookDetails?.title}
@@ -49,7 +49,7 @@ export default function BookDetails() {
 
         {/* details  */}
 
-        <div className="w-1/2 flex flex-col justify-between">
+        <div className="w-5/6 md:w-1/2 mx-auto flex flex-col justify-between">
           <div className="flex py-5 flex-col">
             <h3 className="text-4xl font-medium mb-2">{bookDetails?.title}</h3>
             <p className="text-sm">Genre: {bookDetails?.genre}</p>
