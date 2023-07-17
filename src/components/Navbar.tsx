@@ -1,11 +1,16 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { logOut } from "../redux/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 
 type Props = {
   class?: string;
 };
+
+interface SearchInput {
+  searchTerm: string;
+}
 
 // Login Button
 const LoginButton = (props: Props) => {
@@ -45,6 +50,11 @@ const LogOutButton = (props: Props) => {
 const Navbar = () => {
   const [menuState, setMenuState] = useState(false);
   const { user } = useAppSelector((state) => state.user);
+  const navigate = useNavigate();
+  // for search
+  const [searchParams] = useSearchParams();
+
+  const { register, handleSubmit } = useForm<SearchInput>();
 
   const navigation = [
     { title: "Home", path: "/" },
@@ -60,6 +70,11 @@ const Navbar = () => {
     ];
     navigation.push(...userNavigation);
   }
+
+  const onSubmit = async (userData: SearchInput) => {
+    searchParams.set("searchTerm", userData.searchTerm);
+    navigate(`/books/search?${searchParams.toString()}`);
+  };
 
   return (
     <>
@@ -77,7 +92,7 @@ const Navbar = () => {
           </div>
           <div className="flex-1 flex items-center justify-between">
             <div
-              className={`absolute z-20 w-full top-16 left-0 p-4 border-b lg:static lg:block lg:border-none ${
+              className={`absolute z-20 w-full top-16 left-0 p-4 border-b lg:static lg:block lg:border-none bg-white md:bg-transparent ${
                 menuState ? "" : "hidden"
               }`}>
               <ul className="mt-12 mb-5 md:mb-0 space-y-5 lg:flex lg:justify-center lg:space-x-6 lg:space-y-0 lg:mt-0">
@@ -98,25 +113,30 @@ const Navbar = () => {
               )}
             </div>
             <div className="flex-1 flex items-center justify-end space-x-2 sm:space-x-6">
-              <form className="flex text-sm items-center space-x-2 border rounded-md p-2">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-5 w-5 flex-none text-gray-300"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor">
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                  />
-                </svg>
+              <form
+                onSubmit={handleSubmit(onSubmit)}
+                className="flex text-sm items-center space-x-2 border rounded-md py-2 ps-3 relative">
                 <input
                   className="w-full bg-transparent outline-none appearance-none placeholder-gray-500 text-gray-500 sm:w-auto"
                   type="text"
                   placeholder="Search"
+                  {...register("searchTerm", { required: "Email is required" })}
                 />
+                <button className="h-full absolute right-0 bg-white rounded-md px-2">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    className="h-6 w-6 flex-none text-gray-300"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor">
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                    />
+                  </svg>
+                </button>
               </form>
 
               {/* // set profile or login button in bar */}

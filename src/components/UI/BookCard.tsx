@@ -11,7 +11,7 @@ function BookCard({ book }: { book: IBook }) {
     <>
       <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
         <img
-          src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg"
+          src="https://m.media-amazon.com/images/I/51AC2+BVowL._SX307_BO1,204,203,200_.jpg"
           className="h-full w-full object-cover object-center lg:h-full lg:w-full"
         />
       </div>

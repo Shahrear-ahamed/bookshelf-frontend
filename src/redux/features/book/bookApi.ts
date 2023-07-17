@@ -30,6 +30,11 @@ const bookApi = bookShelfApi.injectEndpoints({
       }),
       providesTags: ["singleBook"],
     }),
+    getSearchBooks: builder.query({
+      query: (search: string) => ({
+        url: `/books?searchTerm=${search}`,
+      }),
+    }),
     addNewBook: builder.mutation({
       query: (book: IBook) => ({
         url: "/books/add-new-book",
@@ -73,13 +78,13 @@ const bookApi = bookShelfApi.injectEndpoints({
       }),
       invalidatesTags: ["singleBook"],
     }),
-    
   }),
 });
 
 export const {
   useGetHomeBooksQuery,
   useGetMyBooksQuery,
+  useGetSearchBooksQuery,
   useAddNewBookMutation,
   useGetSingleBookQuery,
   useDeleteBookMutation,

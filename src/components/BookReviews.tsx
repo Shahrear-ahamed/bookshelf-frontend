@@ -49,7 +49,7 @@ export default function BookReviews({ reviews, bookId }: IBookReviewsProps) {
         <form onSubmit={handleSubmit(onSubmit)} className="mb-4">
           <div className="w-full flex flex-col md:flex-row items-end">
             <textarea
-              className="flex-grow p-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 resize-none"
+              className="flex-grow w-full p-4 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500 resize-none"
               placeholder="Write your review..."
               {...register("review", {
                 required: "Review must be required",

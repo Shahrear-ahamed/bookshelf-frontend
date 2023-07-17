@@ -10,6 +10,7 @@ import Login from "../pages/Login";
 import MyBooks from "../pages/MyBooks";
 import MyReadingList from "../pages/MyReadingList";
 import PageNotFound from "../pages/PageNotFound";
+import SearchResult from "../pages/SearchResult";
 import SignUp from "../pages/SignUp";
 import PrivateRoute from "./PrivateRoute";
 
@@ -61,6 +62,10 @@ const router = createBrowserRouter([
       {
         path: "/reading-list",
         element: <MyReadingList />,
+      },
+      {
+        path: "/books/search",
+        element: <SearchResult />,
       },
     ],
   },

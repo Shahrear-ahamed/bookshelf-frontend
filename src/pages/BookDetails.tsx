@@ -41,7 +41,7 @@ export default function BookDetails() {
       <div className="flex flex-col md:flex-row justify-between w-full md:w-3/4 mx-auto my-10 gap-10">
         <div className="h-full w-3/5 md:w-1/2 mx-auto">
           <img
-            src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg"
+            src="https://m.media-amazon.com/images/I/51AC2+BVowL._SX307_BO1,204,203,200_.jpg"
             alt={bookDetails?.title}
             className="h-full w-full object-cover object-center lg:h-full lg:w-full rounded-2xl"
           />

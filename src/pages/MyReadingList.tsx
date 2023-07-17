@@ -69,7 +69,7 @@ export default function MyReadingList() {
                 <td className="p-2">
                   <Link to={`/book/${readingBook.book._id}`}>
                     <img
-                      src="https://tailwindui.com/img/ecommerce-images/category-page-04-image-card-04.jpg"
+                      src="https://m.media-amazon.com/images/I/51AC2+BVowL._SX307_BO1,204,203,200_.jpg"
                       alt={readingBook.book.title}
                       className="w-16 h-16 object-contain m-auto"
                     />
