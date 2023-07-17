@@ -56,7 +56,7 @@ const Login = () => {
       <div className="max-w-sm w-full text-gray-600">
         <div className="text-center">
           <img
-            src="/src/assets/bookshelf_logo.svg"
+            src="/public/logo.png"
             width={70}
             className="mx-auto"
           />

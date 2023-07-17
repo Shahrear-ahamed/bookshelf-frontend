@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDeleteBookMutation } from "../redux/features/book/bookApi";
-import { IBookDetailsButtonProps } from "../types/Props";
+import { IBookDetailsButtonProps } from "../types/bookProps";
 import Modal from "./UI/Modal";
 
 export default function EditAndDeleteButton({

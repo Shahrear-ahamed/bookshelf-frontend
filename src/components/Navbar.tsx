@@ -83,7 +83,7 @@ const Navbar = () => {
           <div className="flex-none lg:flex-initial">
             <Link to="/">
               <img
-                src="/src/assets/bookshelf_logo.svg"
+                src="/public/logo.png"
                 width={60}
                 height={55}
                 alt="Bookshelf logo"

@@ -1,10 +1,10 @@
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 import {
-    useAddReadingListMutation,
-    useAddWishListMutation,
+  useAddReadingListMutation,
+  useAddWishListMutation,
 } from "../redux/features/user/userApi";
-import { IBookDetailsButtonProps } from "../types/Props";
+import { IBookDetailsButtonProps } from "../types/bookProps";
 import { IErrorResponse } from "../types/response";
 
 export default function WishAndReadingList({
