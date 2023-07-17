@@ -34,7 +34,7 @@ export default function WishAndReadingList({
   // handle add to reading list
   const handleReadingList = () => {
     if (user?.email) {
-      const readingBook = { bookId: book._id, status: "reading" };
+      const readingBook = { book: book._id, status: "reading" };
 
       addReadingList(readingBook);
     } else {

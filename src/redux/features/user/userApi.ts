@@ -31,9 +31,30 @@ const userApi = bookShelfApi.injectEndpoints({
         },
       }),
     }),
+    getReadingList: builder.query({
+      query: () => ({
+        url: "/users/reading-list",
+        method: "GET",
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      providesTags: ["readingList"],
+    }),
     addReadingList: builder.mutation({
       query: (readingData) => ({
         url: `/users/reading-list`,
+        method: "PUT",
+        body: readingData,
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: ["readingList"],
+    }),
+    finishABookReadingList: builder.mutation({
+      query: (readingData) => ({
+        url: `/users/reading-list/finished`,
         method: "PUT",
         body: readingData,
         headers: {
@@ -49,5 +70,7 @@ export const {
   useSignUpUserMutation,
   useLoginUserMutation,
   useAddWishListMutation,
+  useGetReadingListQuery,
   useAddReadingListMutation,
+  useFinishABookReadingListMutation,
 } = userApi;
