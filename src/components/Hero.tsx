@@ -14,7 +14,7 @@ export default function Hero() {
           <div className="max-w-screen-xl mx-auto px-4 py-28 gap-12 text-gray-600 overflow-hidden md:px-8 md:flex">
             <div className="flex-none space-y-5 max-w-xl">
               <Link
-                to="/"
+                to="/blogs"
                 className="inline-flex gap-x-6 items-center rounded-full p-1 pr-6 border text-sm font-medium duration-150 hover:bg-white">
                 <span className="inline-block rounded-full px-3 py-1 bg-indigo-600 text-white">
                   News
@@ -44,9 +44,9 @@ export default function Hero() {
               </p>
               <div className="flex items-center gap-x-3 sm:text-sm">
                 <Link
-                  to="/"
+                  to="/all-books"
                   className="flex items-center justify-center gap-x-1 py-2 px-4 text-white font-medium bg-gray-800 duration-150 hover:bg-gray-700 active:bg-gray-900 rounded-full md:inline-flex">
-                  Get started
+                  View books
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"
@@ -60,9 +60,9 @@ export default function Hero() {
                   </svg>
                 </Link>
                 <Link
-                  to="/"
+                  to="/add-new-book"
                   className="flex items-center justify-center gap-x-1 py-2 px-4 text-gray-700 hover:text-gray-900 font-medium duration-150 md:inline-flex">
-                  Contact sales
+                  Publish book
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 20 20"

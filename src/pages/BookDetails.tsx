@@ -1,15 +1,18 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import BookDetailsButton from "../components/BookDetailsButton";
 import BookReviews from "../components/BookReviews";
+import EditAndDeleteButton from "../components/EditAndDeleteButton";
 import BookNotFound from "../components/UI/BookNotFound";
+import WishAndReadingList from "../components/WishAndReadingList";
 import { useGetSingleBookQuery } from "../redux/features/book/bookApi";
+import { useAppSelector } from "../redux/hook";
 import { IBook } from "../types/book";
 import { IErrorResponse } from "../types/response";
 
 export default function BookDetails() {
   const { id } = useParams();
+  const user = useAppSelector((state) => state.user.user);
 
   // get single book
   const { data, isLoading, isSuccess, isError, error } = useGetSingleBookQuery(
@@ -50,13 +53,16 @@ export default function BookDetails() {
           <div className="flex py-5 flex-col">
             <h3 className="text-4xl font-medium mb-2">{bookDetails?.title}</h3>
             <p className="text-sm">Genre: {bookDetails?.genre}</p>
-            <h2 className="text-lg">Author: {bookDetails?.author}</h2>
+            <h2 className="text-base">Author: {bookDetails?.author}</h2>
             <p className="text-base">
               Published: {bookDetails?.publicationDate}
             </p>
           </div>
 
-          <BookDetailsButton book={bookDetails} />
+          <div className="">
+            <WishAndReadingList book={bookDetails} user={user} />
+            <EditAndDeleteButton book={bookDetails} user={user} />
+          </div>
         </div>
       </div>
 

@@ -8,6 +8,7 @@ import EditBook from "../pages/EditBook";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import MyBooks from "../pages/MyBooks";
+import MyReadingList from "../pages/MyReadingList";
 import PageNotFound from "../pages/PageNotFound";
 import SignUp from "../pages/SignUp";
 import PrivateRoute from "./PrivateRoute";
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
       {
         path: "/book/:id",
         element: <BookDetails />,
+      },
+      {
+        path: "/reading-list",
+        element: <MyReadingList />,
       },
     ],
   },

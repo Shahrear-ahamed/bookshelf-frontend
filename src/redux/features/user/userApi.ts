@@ -31,6 +31,17 @@ const userApi = bookShelfApi.injectEndpoints({
         },
       }),
     }),
+    addReadingList: builder.mutation({
+      query: (readingData) => ({
+        url: `/users/reading-list`,
+        method: "PUT",
+        body: readingData,
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: ["readingList"],
+    }),
   }),
 });
 
@@ -38,4 +49,5 @@ export const {
   useSignUpUserMutation,
   useLoginUserMutation,
   useAddWishListMutation,
+  useAddReadingListMutation,
 } = userApi;

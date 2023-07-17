@@ -5,6 +5,6 @@ export const bookShelfApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: "http://localhost:5000/api/v1",
   }),
-  tagTypes: ["allBook", "homeBook", "myBook", "singleBook"],
+  tagTypes: ["allBook", "homeBook", "myBook", "singleBook", "readingList"],
   endpoints: () => ({}),
 });

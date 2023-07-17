@@ -56,6 +56,7 @@ const Navbar = () => {
     const userNavigation = [
       { title: "My books", path: "/my-books" },
       { title: "Add New Book", path: "/add-new-book" },
+      { title: "My Reading", path: "/reading-list" },
     ];
     navigation.push(...userNavigation);
   }

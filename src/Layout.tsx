@@ -18,6 +18,8 @@ function Layout() {
       dispatch(setUserData({ email: user }));
       dispatch(setLoading(false));
     }
+
+    dispatch(setLoading(false));
   }, [dispatch]);
 
   return (
