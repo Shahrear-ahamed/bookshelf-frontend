@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useSignUpUserMutation } from "../redux/features/user/userApi";
 import { setUserData } from "../redux/features/user/userSlice";
@@ -14,6 +14,9 @@ interface SignUpFormInputs {
 }
 
 const SignUp = () => {
+  const location = useLocation();
+  const transfer = location?.state?.from || "/";
+
   const {
     register,
     handleSubmit,
@@ -48,9 +51,9 @@ const SignUp = () => {
       dispatch(setUserData(storeData));
 
       toast.success("Sign up successful");
-      navigate("/");
+      navigate(transfer);
     }
-  }, [data, dispatch, isError, isSuccess, navigate]);
+  }, [data, dispatch, isError, isSuccess, navigate, transfer]);
 
   return (
     <main className="w-full h-screen flex flex-col items-center justify-center px-4">
@@ -69,6 +72,7 @@ const SignUp = () => {
               Have already an account?{" "}
               <Link
                 to="/login"
+                state={{ from: transfer }}
                 className="font-medium text-indigo-600 hover:text-indigo-500">
                 Login
               </Link>

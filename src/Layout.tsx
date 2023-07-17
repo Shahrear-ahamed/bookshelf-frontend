@@ -1,15 +1,14 @@
-import { ReactNode, useEffect } from "react";
+import { useEffect } from "react";
+import { Outlet } from "react-router-dom";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
-import { setUserData } from "./redux/features/user/userSlice";
+import { setLoading, setUserData } from "./redux/features/user/userSlice";
 import { useAppDispatch } from "./redux/hook";
 
-interface IProps {
-  children: ReactNode;
-}
-function Layout({ children }: IProps) {
+function Layout() {
   const dispatch = useAppDispatch();
+  dispatch(setLoading(true));
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -17,13 +16,15 @@ function Layout({ children }: IProps) {
 
     if (token && user) {
       dispatch(setUserData({ email: user }));
+      dispatch(setLoading(false));
     }
   }, [dispatch]);
+
   return (
     <>
       <Navbar />
       <section className="mt-12 mx-auto px-4 max-w-screen-xl md:px-8">
-        {children}
+        <Outlet />
       </section>
       <Footer />
     </>

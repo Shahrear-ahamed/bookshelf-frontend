@@ -10,16 +10,56 @@ import Login from "../pages/Login";
 import MyBooks from "../pages/MyBooks";
 import PageNotFound from "../pages/PageNotFound";
 import SignUp from "../pages/SignUp";
+import PrivateRoute from "./PrivateRoute";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: (
-      <Layout>
-        <Home />
-      </Layout>
-    ),
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+      {
+        path: "/all-books",
+        element: <AllBooks />,
+      },
+      {
+        path: "/blogs",
+        element: <Blogs />,
+      },
+      {
+        path: "/my-books",
+        element: (
+          <PrivateRoute>
+            <MyBooks />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/add-new-book",
+        element: (
+          <PrivateRoute>
+            <AddNewBook />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/edit-book/:id",
+        element: (
+          <PrivateRoute>
+            <EditBook />
+          </PrivateRoute>
+        ),
+      },
+      {
+        path: "/book/:id",
+        element: <BookDetails />,
+      },
+    ],
   },
+
   {
     path: "/login",
     element: <Login />,
@@ -28,55 +68,6 @@ const router = createBrowserRouter([
     path: "/signup",
     element: <SignUp />,
   },
-  {
-    path: "/all-books",
-    element: (
-      <Layout>
-        <AllBooks />
-      </Layout>
-    ),
-  },
-  {
-    path: "/blogs",
-    element: (
-      <Layout>
-        <Blogs />
-      </Layout>
-    ),
-  },
-  {
-    path: "/my-books",
-    element: (
-      <Layout>
-        <MyBooks />
-      </Layout>
-    ),
-  },
-  {
-    path: "/add-new-book",
-    element: (
-      <Layout>
-        <AddNewBook />
-      </Layout>
-    ),
-  },
-  {
-    path: "/edit-book/:id",
-    element: (
-      <Layout>
-        <EditBook />
-      </Layout>
-    ),
-  },
-  {
-    path: "/book/:id",
-    element: (
-      <Layout>
-        <BookDetails />
-      </Layout>
-    ),
-  },
-
   {
     path: "*",
     element: <PageNotFound />,

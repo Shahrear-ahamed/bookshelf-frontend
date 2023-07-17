@@ -24,6 +24,9 @@ const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    setLoading: (state, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload;
+    },
     setUserData: (state, action: PayloadAction<IUser>) => {
       state.user.email = action.payload.email;
     },
@@ -34,6 +37,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { setUserData, logOut } = userSlice.actions;
+export const { setLoading, setUserData, logOut } = userSlice.actions;
 
 export default userSlice.reducer;

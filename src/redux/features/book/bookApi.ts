@@ -34,6 +34,9 @@ const bookApi = bookShelfApi.injectEndpoints({
         url: "/books/add-new-book",
         method: "POST",
         body: book,
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
       }),
       invalidatesTags: ["allBook", "homeBook", "myBook"],
     }),

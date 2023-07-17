@@ -4,8 +4,8 @@ import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import {
-  useGetSingleBookQuery,
-  useUpdateBookMutation,
+    useGetSingleBookQuery,
+    useUpdateBookMutation,
 } from "../redux/features/book/bookApi";
 import { useAppSelector } from "../redux/hook";
 import { IBook } from "../types/book";
@@ -30,7 +30,7 @@ export default function EditBook() {
   } = useForm<IEditBookFormInputs>();
 
   // get edit book
-  const { data, isLoading, isError, error } = useGetSingleBookQuery(
+  const { data, isLoading, isError, error, refetch } = useGetSingleBookQuery(
     id as string
   );
   const bookDetails: IBook = data?.data;
@@ -68,13 +68,14 @@ export default function EditBook() {
     // update book success and error
     if (updateSuccess && !updateIsError) {
       toast.success("Book update successfully");
+      refetch();
     }
 
     if (updateIsError) {
       const updateChangeError = updateError as IErrorResponse;
       toast.error(updateChangeError?.data?.message);
     }
-  }, [error, isError, updateError, updateIsError, updateSuccess]);
+  }, [error, isError, refetch, updateError, updateIsError, updateSuccess]);
 
   if (isLoading) return <div>Loading...</div>;
 
