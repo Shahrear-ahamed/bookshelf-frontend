@@ -6,5 +6,6 @@ export interface IBook {
   publisher: string;
   createdAt: string;
   updatedAt: string;
+  reviews: string[];
   publicationDate: number;
 }

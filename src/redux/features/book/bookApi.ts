@@ -28,6 +28,7 @@ const bookApi = bookShelfApi.injectEndpoints({
       query: (id: string) => ({
         url: `/books/${id}`,
       }),
+      providesTags: ["singleBook"],
     }),
     addNewBook: builder.mutation({
       query: (book: IBook) => ({
@@ -61,6 +62,17 @@ const bookApi = bookShelfApi.injectEndpoints({
       }),
       invalidatesTags: ["allBook", "homeBook", "myBook"],
     }),
+    giveReview: builder.mutation({
+      query: ({ id, review }: { id: string; review: string }) => ({
+        url: `/books/review/${id}`,
+        method: "PUT",
+        body: { review },
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      }),
+      invalidatesTags: ["singleBook"],
+    }),
   }),
 });
 
@@ -71,4 +83,5 @@ export const {
   useGetSingleBookQuery,
   useDeleteBookMutation,
   useUpdateBookMutation,
+  useGiveReviewMutation,
 } = bookApi;
