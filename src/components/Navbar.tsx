@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate, useSearchParams } from "react-router-dom";
+import logo from "../assets/logo.png";
 import { logOut } from "../redux/features/user/userSlice";
 import { useAppDispatch, useAppSelector } from "../redux/hook";
 
@@ -82,12 +83,7 @@ const Navbar = () => {
         <div className="flex items-center space-x-8 py-2 px-4 max-w-screen-xl mx-auto md:px-8">
           <div className="flex-none lg:flex-initial">
             <Link to="/">
-              <img
-                src="/public/logo.png"
-                width={60}
-                height={55}
-                alt="Bookshelf logo"
-              />
+              <img src={logo} width={60} height={55} alt="Bookshelf logo" />
             </Link>
           </div>
           <div className="flex-1 flex items-center justify-between">

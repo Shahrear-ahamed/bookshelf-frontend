@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import logo from "../assets/logo.png";
 import { useSignUpUserMutation } from "../redux/features/user/userApi";
 import { setUserData } from "../redux/features/user/userSlice";
 import { useAppDispatch } from "../redux/hook";
@@ -59,11 +60,7 @@ const SignUp = () => {
     <main className="w-full h-screen flex flex-col items-center justify-center px-4">
       <div className="max-w-sm w-full text-gray-600">
         <div className="text-center">
-          <img
-            src="/public/logo.png"
-            width={70}
-            className="mx-auto"
-          />
+          <img src={logo} width={70} className="mx-auto" />
           <div className="mt-5 space-y-2">
             <h3 className="text-gray-800 text-2xl font-bold sm:text-3xl">
               Create a new account

@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
+import logo from "../assets/logo.png";
 import { useLoginUserMutation } from "../redux/features/user/userApi";
 import { setUserData } from "../redux/features/user/userSlice";
 import { useAppDispatch } from "../redux/hook";
@@ -56,7 +57,7 @@ const Login = () => {
       <div className="max-w-sm w-full text-gray-600">
         <div className="text-center">
           <img
-            src="/public/logo.png"
+            src={logo}
             width={70}
             className="mx-auto"
           />
